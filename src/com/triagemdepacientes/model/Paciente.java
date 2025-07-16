@@ -12,6 +12,7 @@ public class Paciente {
 	private LocalDate dataNasc ;
 	private String relatoQueixas;
 	private LocalDateTime horarioEnfileiramento;
+	private String senha;
 	
 	public Paciente(String nomeCompleto, String cpf, String sexo, LocalDate dataNasc, String relatoQueixas) {
 		super();
@@ -62,16 +63,47 @@ public class Paciente {
 		this.relatoQueixas = relatoQueixas;
 	}
 
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public LocalDateTime getHorarioEnfileiramento() {
 		return horarioEnfileiramento;
 	}
 	
-	//TODO: Quando enfileirar adicionar a data 
 
 	public void setHorarioEnfileiramento(LocalDateTime horarioEnfileiramento) {
 		this.horarioEnfileiramento = horarioEnfileiramento;
 	}
 	
+	
+	// Dentro da sua classe Paciente.java
+
+	@Override
+	public String toString() {
+	    // Primeiro, vamos garantir que temos os dados antes de formatar
+	    String senhaStr = (senha != null) ? senha : "N/A";
+	    String horarioStr = "N/A";
+	    
+	    // Formata o horário para ficar mais amigável
+	   /* if (horarioEntradaFila != null) {
+	        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("HH:mm:ss");
+	        horarioStr = horarioEntradaFila.format(formatador);
+	    }*/
+
+	    // Monta a string de retorno com as informações que você quer mostrar
+	    return String.format("[Senha: %s, Nome: %s, CPF: %s, Entrada: %s]",
+	            senhaStr,
+	            nomeCompleto,
+	            cpf,
+	            horarioStr
+	    );
+	}
 	
 	//TODO: Falta testar 
 	public String consultarFaixaEtaria() {
