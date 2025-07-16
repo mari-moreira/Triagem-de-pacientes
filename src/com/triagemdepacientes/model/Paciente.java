@@ -2,6 +2,7 @@ package com.triagemdepacientes.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Paciente {
 
@@ -64,12 +65,20 @@ public class Paciente {
 	public LocalDateTime getHorarioEnfileiramento() {
 		return horarioEnfileiramento;
 	}
+	
+	//TODO: Quando enfileirar adicionar a data 
 
 	public void setHorarioEnfileiramento(LocalDateTime horarioEnfileiramento) {
 		this.horarioEnfileiramento = horarioEnfileiramento;
 	}
 	
-	public String consultarFaixaEtaria(int idade) {
+	
+	//TODO: Falta testar 
+	public String consultarFaixaEtaria() {
+		LocalDate dataHoje = LocalDate.now();
+		LocalDate dataNasc = getDataNasc();
+		int idade = (int) ChronoUnit.YEARS.between(dataNasc, dataHoje);
+		
 		if(idade <= 12 ) {
 			return "Criança";
 		}else if(idade <=17) {
