@@ -2,6 +2,7 @@ package com.triagemdepacientes.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Paciente {
@@ -81,22 +82,15 @@ public class Paciente {
 		this.horarioEnfileiramento = horarioEnfileiramento;
 	}
 	
-	
-	// Dentro da sua classe Paciente.java
 
 	@Override
 	public String toString() {
-	    // Primeiro, vamos garantir que temos os dados antes de formatar
 	    String senhaStr = (senha != null) ? senha : "N/A";
 	    String horarioStr = "N/A";
 	    
-	    // Formata o horário para ficar mais amigável
-	   /* if (horarioEntradaFila != null) {
 	        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("HH:mm:ss");
-	        horarioStr = horarioEntradaFila.format(formatador);
-	    }*/
-
-	    // Monta a string de retorno com as informações que você quer mostrar
+	        horarioStr = horarioEnfileiramento.format(formatador);
+	    
 	    return String.format("[Senha: %s, Nome: %s, CPF: %s, Entrada: %s]",
 	            senhaStr,
 	            nomeCompleto,

@@ -45,17 +45,17 @@ public class CadastroPacienteIO {
         System.out.println("O que você está sentindo");
         String relatoQueixas = sc.nextLine();
         
-        // 1. Cria o objeto Paciente
+    
         Paciente paciente = new Paciente(nomeCompleto, cpf, sexo, dataNasc, relatoQueixas);
         
-        // 2. Pergunta ao usuário qual a classificação
+      
         ClassificacaoRisco classificacao = solicitarClassificacao(sc);
 
-        // 3. USA O GERENCIADOR PARA SALVAR O PACIENTE NA FILA (PASSO ESSENCIAL)
+        
         try {
             String senha = gerenciador.adicionarPaciente(paciente, classificacao);
-            System.out.printf("\nSUCESSO! Paciente '%s' cadastrado na fila %s com a senha: %s\n\n",
-                    paciente.getNomeCompleto(), classificacao.getSigla(), senha); // Verifique se o método é getSigla() ou getDescricao() no seu Enum
+            System.out.printf("\n[ SUCESSO! Paciente: %s cadastrado na fila:  %s com a senha: %s ]\n\n",
+                    paciente.getNomeCompleto(), classificacao.getDescricao(), senha); 
         } catch (IllegalArgumentException e) {
             System.err.println("\nERRO AO CADASTRAR: " + e.getMessage() + "\n");
         }
@@ -74,7 +74,6 @@ public class CadastroPacienteIO {
             System.out.print("Escolha a classificação: ");
 
             try {
-                // Usar sc.nextLine() aqui também ajuda a evitar o mesmo problema no futuro
                 opcao = Integer.parseInt(sc.nextLine()); 
                 switch (opcao) {
                     case 1: return ClassificacaoRisco.EMERGENCIA;
@@ -89,5 +88,4 @@ public class CadastroPacienteIO {
             }
         }
     }
-
 }

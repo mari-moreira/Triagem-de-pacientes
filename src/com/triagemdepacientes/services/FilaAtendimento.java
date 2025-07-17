@@ -22,19 +22,17 @@ public class FilaAtendimento {
 		this.contadoresSenha = new EnumMap<>(ClassificacaoRisco.class);
 		this.cpfsRegistrados = new HashSet<>();
 
-		// Fila vazia
 		for (ClassificacaoRisco c : ClassificacaoRisco.values()) {
 			filas.put(c, new LinkedList<>());
 			contadoresSenha.put(c, 1);
 		}
 		
 	}
-	// Add Paciente
+
 	public  String adicionarPaciente(Paciente paciente, ClassificacaoRisco classificacaoRisco) {
 		if(cpfsRegistrados.contains(paciente.getCpf())) 
-			throw new IllegalArgumentException("CPF já foi Cadastrado");
+			throw new IllegalArgumentException("CPF " + paciente.getCpf() + " já foi Cadastrado");
 		
-		// SEnha de atendimento
 		int sequenciaSenha = contadoresSenha.get(classificacaoRisco);
 		String senha = classificacaoRisco.getSigla() + "." + sequenciaSenha;
 		paciente.setSenha(senha);
@@ -46,10 +44,11 @@ public class FilaAtendimento {
 		contadoresSenha.put(classificacaoRisco, sequenciaSenha + 1);
 		cpfsRegistrados.add(paciente.getCpf());
 		
+		
 		return senha;
+		
 	}
 	
-	//TODO: Colocar isso no menu
 	public void visualizarFilas() {
 	       System.out.println("\n==============================================");
 	        System.out.println("        ESTADO ATUAL DE TODAS AS FILAS");

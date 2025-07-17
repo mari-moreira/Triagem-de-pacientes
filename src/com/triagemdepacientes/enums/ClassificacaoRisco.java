@@ -1,7 +1,6 @@
 package com.triagemdepacientes.enums;
 
 public enum ClassificacaoRisco {
-	// Agora passamos 3 valores: a descrição, a sigla e o tempo
 	EMERGENCIA("Emergência", "E", 4),
 	MUITO_URGENTE("Muito Urgente", "M", 10), 
 	URGENTE("Urgente", "U", 50), 
@@ -19,7 +18,6 @@ public enum ClassificacaoRisco {
 		this.tempo = tempo;
 	}
 
-	// Novo getter para a descrição
 	public String getDescricao() {
 		return descricao;
 	}
