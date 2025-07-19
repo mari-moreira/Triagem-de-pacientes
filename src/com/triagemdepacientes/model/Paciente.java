@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import com.triagemdepacientes.enums.ClassificacaoRisco;
+
 public class Paciente {
 
 	private String nomeCompleto;
@@ -14,6 +16,7 @@ public class Paciente {
 	private String relatoQueixas;
 	private LocalDateTime horarioEnfileiramento;
 	private String senha;
+	private ClassificacaoRisco classificacaoRisco;
 	
 	public Paciente(String nomeCompleto, String cpf, String sexo, LocalDate dataNasc, String relatoQueixas) {
 		super();
@@ -82,7 +85,6 @@ public class Paciente {
 		this.horarioEnfileiramento = horarioEnfileiramento;
 	}
 	
-
 	@Override
 	public String toString() {
 	    String senhaStr = (senha != null) ? senha : "N/A";
@@ -98,22 +100,13 @@ public class Paciente {
 	            horarioStr
 	    );
 	}
-	
-	//TODO: Falta testar 
-	public String consultarFaixaEtaria() {
-		LocalDate dataHoje = LocalDate.now();
-		LocalDate dataNasc = getDataNasc();
-		int idade = (int) ChronoUnit.YEARS.between(dataNasc, dataHoje);
-		
-		if(idade <= 12 ) {
-			return "Criança";
-		}else if(idade <=17) {
-			return "Adolescente";
-		}else if(idade <=59) {
-			return "Adulto";
-		}else {
-			return "Idoso";
-		}
+
+	public ClassificacaoRisco getClassificacaoRisco() {
+		return classificacaoRisco;
+	}
+
+	public void setClassificacaoRisco(ClassificacaoRisco classificacaoRisco) {
+		this.classificacaoRisco = classificacaoRisco;
 	}
 	
 }
