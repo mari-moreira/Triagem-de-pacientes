@@ -2,7 +2,9 @@ import java.util.Scanner;
 
 import com.traigemdepacientes.menu.CadastroPacienteIO;
 import com.traigemdepacientes.menu.MenuIO;
+import com.triagemdepacientes.enums.ClassificacaoRisco;
 import com.triagemdepacientes.services.FilaAtendimento;
+import com.triagemdepacientes.util.TerminalColor;
 
 public class Main {
 
@@ -11,12 +13,13 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 		FilaAtendimento filaAtendimento = new FilaAtendimento();
-		
+
 		int opcao = 0;
-		
-		System.out.println("===============================\n");
-		System.out.println("Bem vindo a Triagem de Pacientes \n");
-		System.out.println("===============================\n");
+
+		System.out.println(TerminalColor.GREEN_BOLD + "\r\n"
+				+ "▀█▀ █▀█ █ ▄▀█ █▀▀ █▀▀ █▀▄▀█   █▀▄ █▀▀   █▀█ ▄▀█ █▀▀ █ █▀▀ █▄░█ ▀█▀ █▀▀ █▀\r\n"
+				+ "░█░ █▀▄ █ █▀█ █▄█ ██▄ █░▀░█   █▄▀ ██▄   █▀▀ █▀█ █▄▄ █ ██▄ █░▀█ ░█░ ██▄ ▄█ \n");
+		System.out.println( TerminalColor.RESET);
 
 		do {
 			opcao = MenuIO.menu(sc);
@@ -29,16 +32,41 @@ public class Main {
 				filaAtendimento.visualizarFilas();
 				break;
 			}
+			case 3: {
+				filaAtendimento.chamarProximoPaciente();
+				break;
+			}
+			case 4: {
+				
+				System.out.println(TerminalColor.YELLOW_BOLD + "De qual fila você deseja consultar o próximo paciente?" + TerminalColor.RESET);
+				sc.nextLine();
+				ClassificacaoRisco filaEscolhida = CadastroPacienteIO.solicitarClassificacao(sc);
+
+				filaAtendimento.consultarProximoPaciente(filaEscolhida);
+				break;
+			}
 			case 5: {
-				System.out.println("Programa encerrado ");
+				System.out.print(TerminalColor.YELLOW_BOLD  + "\nDigite o CPF do paciente para verificar a iminência (só números): "+ TerminalColor.RESET);
+				sc.nextLine();
+				String cpfParaConsulta = sc.nextLine();
+
+				filaAtendimento.verificarIminencia(cpfParaConsulta);
+				break;
+			}
+			case 6: {
+				filaAtendimento.exibirEstatisticas();
+				break;
+			}
+			case 7: {
+				System.out.println(TerminalColor.GREEN_BOLD + "Programa Encerrado com Sucesso" + TerminalColor.RESET);
 				break;
 			}
 			default:
-				System.out.println("Algo deu errado. Tente novamente mais tarde");
+				System.out.println(TerminalColor.RED_BOLD + "Algo deu errado. Tente novamente mais tarde" + TerminalColor.RESET);
 			}
 
-		} while (opcao != 5);
-
+		} while (opcao != 7);
+		sc.close();
 	}
 
 }
