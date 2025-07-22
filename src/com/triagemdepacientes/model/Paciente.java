@@ -1,5 +1,6 @@
 package com.triagemdepacientes.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,8 +8,8 @@ import java.time.temporal.ChronoUnit;
 
 import com.triagemdepacientes.enums.ClassificacaoRisco;
 
-public class Paciente {
-
+public class Paciente implements Serializable{
+private static final long serialVersionUDI = 1L;
 	private String nomeCompleto;
 	private String cpf;
 	private String sexo;
@@ -85,6 +86,7 @@ public class Paciente {
 		this.horarioEnfileiramento = horarioEnfileiramento;
 	}
 	
+
 	@Override
 	public String toString() {
 	    String senhaStr = (senha != null) ? senha : "N/A";
