@@ -1,5 +1,6 @@
 package com.triagemdepacientes.services;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +17,8 @@ import com.triagemdepacientes.enums.ClassificacaoRisco;
 import com.triagemdepacientes.model.*;
 import com.triagemdepacientes.util.TerminalColor;
 
-public class FilaAtendimento {
+public class FilaAtendimento implements Serializable{
+	private static final long serialVersionUID= 1L;
 	private final Map<ClassificacaoRisco, Queue<Paciente>> filas;
 	private final Map<ClassificacaoRisco, Integer> contadoresSenha;
 	private final Set<String> cpfsRegistrados;
@@ -224,6 +226,9 @@ public class FilaAtendimento {
 			}
 		}
 		
+	}
+	public boolean isSistemaVazio() {
+		return this.pacientesEmFilaCpf.isEmpty();
 	}
 	
 }
