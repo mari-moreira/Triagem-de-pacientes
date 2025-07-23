@@ -44,6 +44,7 @@ public class FilaAtendimento implements Serializable{
 		}
 
 	}
+	//TODO: REFACTOR: ESTÁ ESTRANHO UM MÉTODO QUE ADICIONA PACINTE E RETORNA UMA SENHA
 
 	public String adicionarPaciente(Paciente paciente, ClassificacaoRisco classificacaoRisco) {
 		 if (cpfJaExiste(paciente.getCpf())) {
@@ -64,6 +65,7 @@ public class FilaAtendimento implements Serializable{
 		return senha;
 
 	}
+	
 	public boolean cpfJaExiste(String cpf) {
 		return this.cpfsRegistrados.contains(cpf);
 	}
@@ -168,14 +170,17 @@ public class FilaAtendimento implements Serializable{
 
 	// TODO: Dividir esse método em vários
 	public void exibirEstatisticas() {
+		//Pacientes por fila
 		System.out.println(TerminalColor.GREEN_BOLD + "==============================================");
 		System.out.println ("\n\n RELATÓRIO ESTATÍSTICO DO ATENDIMENTO");
 		System.out.println("==============================================\n\n" + TerminalColor.RESET) ;
+		
 		System.out.println(TerminalColor.CYAN_BOLD+"\nPACIENTES AGUARDANDO POR FILA"+ TerminalColor.RESET);
 		for (ClassificacaoRisco c : ClassificacaoRisco.values()) {
 			System.out.printf("  - %-15s: %d paciente(s)\n", c.getDescricao(), filas.get(c).size());
 		}
 
+		//Pacientes por fila
 		System.out.println("\nPACIENTES AGUARDANDO POR FAIXA ETÁRIA");
 		int criancas = 0, adolescentes = 0, adultos = 0, idosos = 0;
 		LocalDate dataHoje = LocalDate.now();
@@ -194,11 +199,13 @@ public class FilaAtendimento implements Serializable{
 					idosos++;
 			}
 		}
+		
 		System.out.printf("  - Crianças (0-12): %d\n", criancas);
 		System.out.printf("  - Adolescentes (13-17): %d\n", adolescentes);
 		System.out.printf("  - Adultos (18-59): %d\n", adultos);
 		System.out.printf("  - Idosos (60+): %d\n", idosos);
 
+		//Tempo médio de espera
 		System.out.println(TerminalColor.CYAN_BOLD+"\n TEMPO MÉDIO DE ESPERA ATUAL [em minutos]\n"+TerminalColor.RESET);
 		for (ClassificacaoRisco c : ClassificacaoRisco.values()) {
 			Queue<Paciente> fila = filas.get(c);
@@ -212,10 +219,12 @@ public class FilaAtendimento implements Serializable{
 				double media = (double) somaDoTempo / fila.size();
 				System.out.printf("  - %-15s: %.1f min\n", c.getDescricao(), media);
 			}
-
+		}
+			
+//Performance de atendimento
 			System.out.println(TerminalColor.CYAN_BOLD+"\n PERFORMANCE DE ATENDIMENTO (dos que já foram atendidos):\n"+TerminalColor.RESET);
-			for (ClassificacaoRisco a : ClassificacaoRisco.values()) {
-				int totalPacientesAtendidos = totalPacientesAtendidosNoTempoPorClassificacao.get(a);
+			for (ClassificacaoRisco c : ClassificacaoRisco.values()) {
+				int totalPacientesAtendidos = totalPacientesAtendidosNoTempoPorClassificacao.get(c);
 				if (totalPacientesAtendidos == 0) {
 					System.out.printf("  - %-15s: N/A (nenhum paciente atendido)\n", c.getDescricao());
 				} else {
@@ -226,7 +235,7 @@ public class FilaAtendimento implements Serializable{
 			}
 		}
 		
-	}
+	
 	public boolean isSistemaVazio() {
 		return this.pacientesEmFilaCpf.isEmpty();
 	}
