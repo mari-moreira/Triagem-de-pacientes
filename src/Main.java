@@ -17,7 +17,6 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		FilaAtendimento filaAtendimento = Persistencia.carregarEstado();
 		
-		
 	
 	    if(filaAtendimento.isSistemaVazio()) { 
             gerarDadosDeTeste(filaAtendimento);
