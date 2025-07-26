@@ -104,12 +104,13 @@ public class FilaAtendimento implements Serializable{
 			int tempoMetaProtocolo = classificacaoRisco.getTempo();
 
 			// TODO: Refatorar
+			
 			int totalAtendidos = totalPacientesAtendidosPorClassificacao.get(classificacaoRisco);
-			totalPacientesAtendidosPorClassificacao.put(classificacaoRisco, totalAtendidos++);
+			totalPacientesAtendidosPorClassificacao.put(classificacaoRisco, totalAtendidos + 1);
 
 			if (minutosEmFila <= tempoMetaProtocolo) {
 				int pacientesAtendidosNoTempo = totalPacientesAtendidosNoTempoPorClassificacao.get(classificacaoRisco);
-				totalPacientesAtendidosNoTempoPorClassificacao.put(classificacaoRisco, pacientesAtendidosNoTempo++);
+				totalPacientesAtendidosNoTempoPorClassificacao.put(classificacaoRisco, pacientesAtendidosNoTempo + 1);
 			}
 		} else {
 			System.out.println(" A fila " + classificacaoRisco.getSigla() + "está vazia");
@@ -181,7 +182,7 @@ public class FilaAtendimento implements Serializable{
 		}
 
 		//Pacientes por fila
-		System.out.println("\nPACIENTES AGUARDANDO POR FAIXA ETÁRIA");
+		System.out.println(TerminalColor.CYAN_BOLD + "\nPACIENTES AGUARDANDO POR FAIXA ETÁRIA" + TerminalColor.RESET);
 		int criancas = 0, adolescentes = 0, adultos = 0, idosos = 0;
 		LocalDate dataHoje = LocalDate.now();
 
@@ -224,7 +225,7 @@ public class FilaAtendimento implements Serializable{
 //Performance de atendimento
 			System.out.println(TerminalColor.CYAN_BOLD+"\n PERFORMANCE DE ATENDIMENTO (dos que já foram atendidos):\n"+TerminalColor.RESET);
 			for (ClassificacaoRisco c : ClassificacaoRisco.values()) {
-				int totalPacientesAtendidos = totalPacientesAtendidosNoTempoPorClassificacao.get(c);
+				int totalPacientesAtendidos = totalPacientesAtendidosPorClassificacao.get(c);
 				if (totalPacientesAtendidos == 0) {
 					System.out.printf("  - %-15s: N/A (nenhum paciente atendido)\n", c.getDescricao());
 				} else {
